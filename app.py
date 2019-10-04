@@ -31,7 +31,7 @@ def callback():
         sendText(user,'ทำอะไรก็ได้กูไม่ได้ขอตังค์ใคร')
     else :
         sendText(user,'ฉันไม่เข้าใจ')                                                                     
-        return '',200
+    return '',200
 
 def sendText(user, text):
   LINE_API = 'https://api.line.me/v2/bot/message/reply'
