@@ -3,12 +3,12 @@ import os
 import json
 import requests
 
-app = Flask(__name__)
+app = Flask(_name_)
 
 @app.route('/')
 def index():
     a=os.environ['Authorization']
-    return "นางสาววิราฬ สีนวล เลขที่ 17 ชั้น ม.4/8"
+    return "นางสาววิราฬ สีนวล เลขที่ 17 ชั้น 4/8"
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
@@ -20,17 +20,15 @@ def callback():
     json_line = request.get_json()
     json_line = json.dumps(json_line)
     decoded = json.loads(json_line)
-    #user = decoded["events"][0]['replyToken']
     user = decoded['originalDetectIntentRequest']['payload']['data']['replyToken']
-    #serText = decoded["events"][0]['message']['text']
     userText = decoded['queryResult']['intent']['displayName']
     #sendText(user,userText)
-    if (userText == 'สวัสดี') :
-        sendText(user,'ดีจ้าาา')
-    elif (userText == 'ทำไรอยู่') :
-        sendText(user,'ทำอะไรก็ได้กูไม่ได้ขอตังค์ใคร')
+    if (userText == 'ฮัลโหล') :
+        sendText(user,'ดีจ้า')
+    elif (userText == 'ทำไร') :
+        sendText(user,'นั่งเล่น')
     else :
-        sendText(user,'ฉันไม่เข้าใจ')
+        sendText(user,'ว่าไงอ่ะ')
     return '',200
 
 def sendText(user, text):
@@ -41,9 +39,9 @@ def sendText(user, text):
   }
   data = json.dumps({
     "replyToken":user,
+    "messages":[{"type":"text","text":text}]
   })
   r = requests.post(LINE_API, headers=headers, data=data) # ส่งข้อมูล
 
-if __name__ == '__main__':
-    "messages":[{"type":"text","text":text}]
+if _name_ == '_main_':
     app.run()
