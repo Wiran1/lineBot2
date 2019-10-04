@@ -3,7 +3,7 @@ import os
 import json
 import requests
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -20,18 +20,15 @@ def callback():
     json_line = request.get_json()
     json_line = json.dumps(json_line)
     decoded = json.loads(json_line)
-    #user = decoded["events"][0]['replyToken']
     user = decoded['originalDetectIntentRequest']['payload']['data']['replyToken']
-    #userText = decoded["events"][0]['message']['text']
     userText = decoded['queryResult']['intent']['displayName']
     #sendText(user,userText)
     if (userText == 'สวัสดี') :
-        sendText(user,'ดีไอ่เวร')
-    elif (userText == 'ทำไรไอ้หำ') :
-        sendText(user,'ว่าวอยู่')
-    else :
-        sendText(user,'ชั้นไม่เข้าใจ')
-
+        sendText(user,'เออ!!! ดีด้วย')
+    elif (userText == 'ไอ้บ้า') :
+        sendText(user,'อึงซิบ้า')
+    elif (userText == 'หล่อนะ') :
+        sendText(user,'ขอบคุณที่ชม')
     return '',200
 
 def sendText(user, text):
@@ -46,5 +43,5 @@ def sendText(user, text):
   })
   r = requests.post(LINE_API, headers=headers, data=data) # ส่งข้อมูล
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run()
